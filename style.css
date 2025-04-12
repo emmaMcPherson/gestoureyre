@@ -9,19 +9,44 @@ body {
   background-repeat: repeat;
 }
 
-@keyframes closeWindow {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
+/* Boot-up screen styles */
+.boot-up-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: 'MS Sans Serif', sans-serif;
 }
 
+.boot-up-text {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 
-.window {  
+.progress-bar-container {
+  width: 80%;
+  height: 30px;
+  background-color: gray;
+  border: 2px solid white;
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background-color: green;
+}
+
+/* Window styles */
+.window {
   width: 300px;
   border: 2px solid #000;
   background-color: silver;
@@ -29,11 +54,7 @@ body {
   position: absolute;
   top: 100px;
   left: 100px;
-}
-
-
-.window.closing {
-  animation: closeWindow 0.4s ease-out forwards;
+  display: none;
 }
 
 .title-bar {
@@ -96,4 +117,20 @@ marquee {
   border: 2px outset white;
   cursor: pointer;
   margin-top: 10px;
+}
+
+/* Window closing animation */
+@keyframes closeWindow {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+.window.closing {
+  animation: closeWindow 0.4s ease-out forwards;
 }
