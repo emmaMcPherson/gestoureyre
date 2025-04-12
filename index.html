@@ -15,15 +15,56 @@
       <div class="controls">
         <button class="btn">_</button>
         <button class="btn">☐</button>
-        <button class="btn">X</button>
+        <button class="btn" onclick="closeWindow()">X</button>
       </div>
     </div>
     <div class="window-body">
       <p>Hello World!</p>
-      <button class="btn">Click me</button>
+      <button class="btn" onclick="closeWindow()">Don't click me 😨</button>
     </div>
   </div> 
+
+         <!-- Sound -->
+  <audio id="close-sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
         
+        <script>
+            // Make the window draggable
+    const win = document.getElementById("win95-box");
+    const dragHeader = document.getElementById("drag-header");
+    let isDragging = false;
+    let offsetX, offsetY;
+
+    dragHeader.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      offsetX = e.clientX - win.offsetLeft;
+      offsetY = e.clientY - win.offsetTop;
+    });
+
+    document.addEventListener("mousemove", (e) => {
+      if (isDragging) {
+        win.style.left = `${e.clientX - offsetX}px`;
+        win.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+
+    document.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    // Close window with animation and sound
+    function closeWindow() {
+      const closeSound = document.getElementById("close-sound");
+      closeSound.play();  // Play the sound
+
+      win.classList.add("closing"); // Trigger animation
+
+      setTimeout(() => {
+        alert("Goodbye!");  // Show alert box
+        win.style.display = "none";  // Hide the window
+      }, 400); // After animation duration
+    }
+        </script>
         <nav>
             <ul>
                 <li><a href="#a">Home</a></li>
