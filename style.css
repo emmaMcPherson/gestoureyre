@@ -1,16 +1,36 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  background-color: #000000;
+  color: #00ff00;
+  font-family: 'Fixedsys Excelsior 3.01', monospace;
+  font-size: 16px;
   margin: 0;
   padding: 0;
-  text-align: center;
+  background-image: url('https://www.transparenttextures.com/patterns/escheresque-dark.png');
+  background-repeat: repeat;
 }
 
 h1 {
-  color: #007acc;
+  color: #ff00ff;
+  text-shadow: 2px 2px 0 #000;
+  font-size: 32px;
+  margin-top: 20px;
 }
 
 p {
+  color: #00ffff;
+  padding: 10px;
+  font-size: 18px;
+}
+
+a {
+  color: #ffff00;
+  text-decoration: underline;
+}
+
+marquee {
+  color: #ffffff;
+  background-color: #ff0000;
+  padding: 5px;
+  font-weight: bold;
   font-size: 18px;
 }
