@@ -1,12 +1,45 @@
 body {
-  background-color: #000000;
-  color: #00ff00;
-  font-family: 'Fixedsys Excelsior 3.01', monospace;
+  background-color: ##faf9f6;
+  font-family: 'MS Sans Serif', Tahoma, Geneva, sans-serif;
   font-size: 16px;
   margin: 0;
-  padding: 0;
+  padding: 40px;
+  color: black;
   background-image: url('https://www.transparenttextures.com/patterns/escheresque-dark.png');
   background-repeat: repeat;
+}
+
+
+.window {
+  width: 300px;
+  border: 2px solid #000;
+  background-color: silver;
+  box-shadow: inset -2px -2px #fff, inset 2px 2px #000;
+}
+
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: navy;
+  color: white;
+  padding: 2px 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.title-bar .btn {
+  background: silver;
+  border: 2px outset #fff;
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.window-body {
+  padding: 10px;
 }
 
 h1 {
@@ -33,4 +66,14 @@ marquee {
   padding: 5px;
   font-weight: bold;
   font-size: 18px;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 14px;
+  padding: 2px 8px;
+  background: silver;
+  border: 2px outset white;
+  cursor: pointer;
+  margin-top: 10px;
 }
