@@ -103,11 +103,12 @@
 
 
     <script>
-        // These must be outside so the buttons can access them
+        // Global functions must use lazy lookup (grab elements inside the function)
         function minimizeWindow() {
             const win = document.getElementById("win95-box");
             const music = document.getElementById("main-title");
             const restoreBtn = document.getElementById("restore-btn");
+    
             music.pause();
             music.currentTime = 0;
             win.style.display = "none";
@@ -136,7 +137,7 @@
             }, 400);
         }
     
-        // Your window.onload / DOMContentLoaded can still handle boot-up and dragging:
+        // DOM logic
         window.addEventListener("DOMContentLoaded", () => {
             const win = document.getElementById("win95-box");
             const dragHeader = document.getElementById("drag-header");
@@ -149,19 +150,67 @@
             let reopenCount = 0;
             let offsetX, offsetY;
     
-            // dragging logic...
-            // restoreBtn click logic...
-            // boot-up progress bar logic...
+            dragHeader.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                offsetX = e.clientX - win.offsetLeft;
+                offsetY = e.clientY - win.offsetTop;
+            });
     
-            // Keep your internal functions here if only needed locally
+            document.addEventListener("mousemove", (e) => {
+                if (isDragging) {
+                    win.style.left = `${e.clientX - offsetX}px`;
+                    win.style.top = `${e.clientY - offsetY}px`;
+    
+                    if (!hasDragged) {
+                        hasDragged = true;
+                        startMusicOnDrag();
+                    }
+                }
+            });
+    
+            document.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+    
+            restoreBtn.addEventListener("click", () => {
+                win.classList.add("restoring");
+                win.style.display = "block";
+                restoreBtn.style.display = "none";
+                music.play().catch(e => console.log("Autoplay blocked:", e));
+                reopenCount++;
+                if (reopenCount === 1) {
+                    message.innerHTML = "Ah, you came back! (‾◡◝)<br>I'll put the music back";
+                } else {
+                    message.innerHTML = `Whoa! Gosh, #${reopenCount} times now...<br>That's okay. I'll stay for you （￣︶￣)`;
+                }
+                win.addEventListener("animationend", () => {
+                    win.classList.remove("restoring");
+                }, { once: true });
+            });
+    
             function startMusicOnDrag() {
                 music.play().catch(e => console.log("Autoplay blocked:", e));
                 message.innerHTML = "I've put on some music in the background <br>Can You Guess ƪ(˘⌣˘)ʃ ?";
             }
     
-            // Rest of your DOMContentLoaded stuff unchanged
+            // BOOT-UP
+            let progress = 0;
+            const progressBar = document.getElementById("progress-bar");
+            const bootScreen = document.getElementById("boot-screen");
+    
+            const bootInterval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+    
+                if (progress >= 100) {
+                    clearInterval(bootInterval);
+                    bootScreen.style.display = "none";
+                    win.style.display = "block";
+                }
+            }, 100);
         });
-    </script>     
+    </script>
+    
 
 </body>
 </html>
