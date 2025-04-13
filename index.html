@@ -29,6 +29,7 @@
         </div>
         <div class="window-body">
             <p>Hello World!</p>
+            <p id="music-message"></p>
             <button class="btn" onclick="killWindow()">Don't click me _〆(´Д｀ )</button>
         </div>
     </div>
@@ -100,7 +101,9 @@
         <p>&copy; 2025 gestourEyre</p>
     </footer>
 
+
     <script>
+    window.addEventListener("DOMContentLoaded", () => {
         const win = document.getElementById("win95-box");
         const dragHeader = document.getElementById("drag-header");
         const music = document.getElementById("main-title");
@@ -209,7 +212,7 @@
                     win.style.display = "block";
                 }
             }, 100);
-        };
+        }};
     </script>    
 
 
