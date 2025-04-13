@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS if you have it -->
 </head>
 
-<!-- Taskbar Button -->
-<div id="taskbar">
-    <button id="restore-btn" style="display: none;" class="btn">gestourEyre</button>
-</div>
 
 <body>
     <!-- Boot-up screen -->
@@ -27,7 +23,7 @@
             <div class="title">gestourEyre</div>
             <div class="controls">
                 <button class="btn" onclick="minimizeWindow()">_</button>
-                <button class="btn">☐</button>
+                <button class="btn" onclick="growWindow()">☐</button>
                 <button class="btn" onclick="closeWindow()">X</button>
             </div>
         </div>
@@ -37,9 +33,14 @@
         </div>
     </div>
 
+        <!-- Taskbar Button -->
+    <div id="taskbar">
+        <button id="restore-btn" style="display: none;" class="btn">gestourEyre</button>
+    </div>
+
     <!-- Sound -->
     <audio id="close-sound" src="button-7.wav"></audio>
-    <audio id="main-title" src="all-wii-sounds/Shop Channel Title.wav"></audio>
+    <audio id="main-title" src="all-wii-sounds/Shop Channel Title.wav" loop></audio>
 
     <!--Marquee-message-->
     <header>
@@ -100,129 +101,110 @@
     </footer>
 
     <script>
-        // Make the window draggable
         const win = document.getElementById("win95-box");
         const dragHeader = document.getElementById("drag-header");
+        const music = document.getElementById("main-title");
+        const message = document.getElementById("music-message");
+        const restoreBtn = document.getElementById("restore-btn");
+    
         let isDragging = false;
+        let hasDragged = false;
+        let reopenCount = 0;
         let offsetX, offsetY;
-
+    
+        // DRAGGING
         dragHeader.addEventListener("mousedown", (e) => {
             isDragging = true;
             offsetX = e.clientX - win.offsetLeft;
             offsetY = e.clientY - win.offsetTop;
         });
-
+    
         document.addEventListener("mousemove", (e) => {
             if (isDragging) {
                 win.style.left = `${e.clientX - offsetX}px`;
                 win.style.top = `${e.clientY - offsetY}px`;
-            }
-        });
-
-        document.addEventListener("mouseup", () => {
-            isDragging = false;
-        });
-
-        let hasDragged = false;
-        let reopenCount = 0;
-
-        function startMusicOnDrag() {
-            const music = document.getElementById("main-title");
-            music.play().catch(e => console.log("Autoplay blocked:", e));
-
-            const message = document.getElementById("music-message");
-            message.innerHTML = "I've put on some music in the background <br>Can You Guess :D ?";
-        }
-
-        document.addEventListener("mousemove", (e) => {
-            if (isDragging) {
-                win.style.left = `${e.clientX - offsetX}px`;
-                win.style.top = `${e.clientY - offsetY}px`;
-
+    
                 if (!hasDragged) {
                     hasDragged = true;
                     startMusicOnDrag();
                 }
             }
         });
-
-        // min window with sound
-        function minimizeWindow(){
-            const music = domcument.getElementbyId("main-title");
+    
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+        });
+    
+        function startMusicOnDrag() {
+            music.play().catch(e => console.log("Autoplay blocked:", e));
+            message.innerHTML = "I've put on some music in the background <br>Can You Guess ƪ(˘⌣˘)ʃ ?";
+        }
+    
+        // MINIMIZE
+        function minimizeWindow() {
             music.pause();
             music.currentTime = 0;
-
             win.style.display = "none";
-            document.getElementById("restore-btn").style.display = "inline-block";
-
-            document.getElementById("restore-btn").addEventListener("click", () => {
-                win.style.display = "block";
-                document.getElementById("restore-btn").style.display = "none";
-
-                const music = document.getElementById("main-title");
-                music.play().catch(e => console.log("Autoplay blocked:", e));
-
-                const message = document.getElementById("music-message");
-                reopenCount++;
-                if (reopenCount === 1) {
-                    message.innerHTML = "Ah, you came back! (‾◡◝)<br>I'll put the music back";
-                } else {
-                    message.innerHTML = `Whoa! Gosh, #${reopenCount} times now...<br>That's okay. I'll stay for you （￣︶￣)`;
-                }
-            });
-
+            restoreBtn.style.display = "inline-block";
         }
-        // Kill the window with animation and sound
+    
+        // RESTORE
+        restoreBtn.addEventListener("click", () => {
+            win.style.display = "block";
+            restoreBtn.style.display = "none";
+            music.play().catch(e => console.log("Autoplay blocked:", e));
+    
+            reopenCount++;
+            if (reopenCount === 1) {
+                message.innerHTML = "Ah, you came back! (‾◡◝)<br>I'll put the music back";
+            } else {
+                message.innerHTML = `Whoa! Gosh, #${reopenCount} times now...<br>That's okay. I'll stay for you （￣︶￣)`;
+            }
+        });
+    
+        // KILL WINDOW
         function killWindow() {
             const closeSound = document.getElementById("close-sound");
-            closeSound.play();  // Play the sound
-
-            win.classList.add("closing"); // Trigger animation
-
+            closeSound.play();
     
-
+            win.classList.add("closing");
+    
             setTimeout(() => {
-                alert("you killed it...");  // Show alert box
-                win.style.display = "none";  // Hide the window
-                // Hide all page content
-            document.body.style.display = "none"; // Hides everything on the page
-            }, 400); // After animation duration
+                alert("you killed it...");
+                win.style.display = "none";
+                document.body.style.display = "none";
+            }, 400);
         }
-
- // Function to simulate page close
+    
+        // CLOSE
         function closeWindow() {
             const closeSound = document.getElementById("close-sound");
-            closeSound.play();  // Play the sound
-
-            
-
+            closeSound.play();
+    
             setTimeout(() => {
-                win.style.display = "none"; // Hide the window
-                window.close();  // Try to close the window (may not work in all cases)
-            }, 500);  // Give a little time for the transition to complete
+                win.style.display = "none";
+                window.close();
+            }, 500);
         }
-
-
-
-        // Boot-up screen animation
+    
+        // BOOT-UP
         window.onload = () => {
             let progress = 0;
             const progressBar = document.getElementById("progress-bar");
             const bootScreen = document.getElementById("boot-screen");
-
+    
             const bootInterval = setInterval(() => {
-                progress += 5;  // Increase progress
+                progress += 5;
                 progressBar.style.width = `${progress}%`;
-
-                // After 100% load, hide boot-up and show main window
+    
                 if (progress >= 100) {
                     clearInterval(bootInterval);
-                    bootScreen.style.display = "none";  // Hide boot-up screen
-                    win.style.display = "block";  // Show main window
+                    bootScreen.style.display = "none";
+                    win.style.display = "block";
                 }
-            }, 100);  // Update every 100ms
+            }, 100);
         };
-    </script>
+    </script>    
 
 
 </body>
