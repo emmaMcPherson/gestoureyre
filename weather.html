@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WEATHER</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+    body {
+      font-family: 'Share Tech Mono', monospace;
+      background-color: #000;
+      color: #00fff7;
+      text-align: center;
+      padding: 2em;
+      overflow: hidden;
+    }
+
+    h1 {
+      text-shadow: 0 0 8px #00fff7, 0 0 20px #009999;
+    }
+
+    .weather-box {
+      border: 2px solid #00fff7;
+      padding: 1em;
+      margin-top: 2em;
+      display: inline-block;
+      background-color: rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 20px #00777755;
+    }
+
+    button {
+      margin-top: 1em;
+      padding: 0.5em 1.5em;
+      background: #00fff7;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      font-family: 'Share Tech Mono', monospace;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00fff7;
+      display: none;
+    }
+
+    #bootSequence {
+      white-space: pre-wrap;
+      text-align: left;
+      margin: 0 auto;
+      max-width: 600px;
+      font-size: 1rem;
+      text-shadow: 0 0 6px #00fff7;
+    }
+
+    #weatherImage {
+      margin-top: 1em;
+      max-width: 100%;
+      border: 1px solid #00fff7;
+      box-shadow: 0 0 10px #00fff7;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        rgba(0, 255, 247, 0.02),
+        rgba(0, 255, 247, 0.02) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <audio id="ambientHum" src="sounds/terminal_hum.mp3" autoplay loop></audio>
+  <audio id="weatherSound" loop></audio>
+
+  <div id="bootSequence"></div>
+
+  <div class="weather-box" id="weatherBox" style="display:none;">
+    <p>Loading data...</p>
+  </div>
+
+  <button id="generateBtn" onclick="generateWeather()">Retrieve Forecast</button>
+
+  <script>
+    const locations = [
+      { name: "Bottineau, North Dakota", image: "images/Bottineau, North Dakota.png" },
+      { name: "Ariquemes, Rondônia", image: "images/Ariquemes, Rondônia.png" },
+      { name: "Шубартубек, Қазақстан", image: "images/Шубартубек, Қазақстан.png" },
+      { name: "Бесқарағай, Қазақстан, ", image: "images/Бесқарағай, Қазақстан.png" },
+      { name: "Søndre Strømfjord, Grønland", image: "images/Søndre Strømfjord, Grønland.png" }
+      { name: "Ikamiut, Grønland", image: "images/Ikamiut Strømfjord, Grønland.png" }    
+      { name: "Puerto Madryn, República Argentina", image: "images/Puerto Madryn, República Argentina.png" } 
+      { name: "Río Renaico, Chile", image: "images/Río Renaico, Chile.png" }
+      { name: "서울특별시, 대한민국", image: "images/서울특별시, 대한민국.png" }
+      {name:"오대산국립공원, 대한민국", image: "images/오대산국립공원, 대한민국.png" }
+      {name:"улаанбаатар, Монгол Улс", image: "images/улаанбаатар, Монгол Улс.png" }    
+    ];
+
+    const dates = [
+      "April 12, 1387", "June 5, 3099", "October 31, 1895",
+      "March 3, 2023 B.C.", "Fogtember 13, 420", "Synthuary 8, 7777"
+    ];
+
+    const weathers = [
+      { description: "Rain of frogs. Winds wailing.", sound: "sounds/frogs.mp3" },
+      { description: "Sunny with a 60% chance of dimensional rift.", sound: "sounds/rift.mp3" },
+      { description: "Cloudy with heavy time distortion.", sound: "sounds/time.mp3" },
+      { description: "Holographic haze with digital mist.", sound: "sounds/cyber.mp3" },
+      { description: "Acid snow. Wear a hat.", sound: "sounds/snow.mp3" },
+      { description: "Thunderous laughter from the clouds.", sound: "sounds/laugh.mp3" }
+    ];
+
+    function getRandom(arr) {
+      return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function generateWeather() {
+      const location = getRandom(locations);
+      const date = getRandom(dates);
+      const weather = getRandom(weathers);
+
+      document.body.style.backgroundImage = `url('${location.image}')`;
+
+      const weatherBox = document.getElementById('weatherBox');
+      const weatherSound = document.getElementById('weatherSound');
+
+      weatherBox.innerHTML = `
+        <h2>📍 ${location.name}</h2>
+        <p><strong>Date:</strong> ${date}</p>
+        <p><strong>Weather:</strong> ${weather.description}</p>
+        <img id="weatherImage" src="${location.image}" alt="Weather image">
+      `;
+
+      weatherSound.src = weather.sound;
+      weatherSound.play();
+    }
+
+    // Ambient hum auto-play fallback
+    document.addEventListener("DOMContentLoaded", () => {
+      const hum = document.getElementById("ambientHum");
+      hum.play().catch(() => {
+        // In case browser blocks autoplay, user interaction will trigger it
+        document.body.addEventListener('click', () => hum.play(), { once: true });
+      });
+    });
+
+    // Boot sequence animation
+    const bootLines = [
+      "BOOTING WEATHER TERMINAL 4.2.0...",
+      "Establishing uplink...",
+      "Authenticating server...",
+      "Retrieving metadata...",
+      "Decompressing atmospherics...",
+      "████ DATASTREAM STABILIZED ████",
+      "",
+      "System Ready."
+    ];
+
+    const bootEl = document.getElementById("bootSequence");
+    const generateBtn = document.getElementById("generateBtn");
+    const weatherBox = document.getElementById("weatherBox");
+
+    let lineIndex = 0;
+
+    function typeBootLine() {
+      if (lineIndex < bootLines.length) {
+        bootEl.innerHTML += bootLines[lineIndex] + "\n";
+        lineIndex++;
+        setTimeout(typeBootLine, 800);
+      } else {
+        generateBtn.style.display = "inline-block";
+        weatherBox.style.display = "block";
+      }
+    }
+
+    typeBootLine();
+  </script>
+</body>
+</html>
