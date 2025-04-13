@@ -1,13 +1,23 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #faf9f6;
-  font-family: 'MS Sans Serif', Tahoma, Geneva, sans-serif;
-  font-size: 16px;
-  margin: 0;
-  padding: 40px;
+  font-family: 'Press Start 2P', monospace;
+  padding: 2rem;
   color: black;
+  line-height: 1.6;
   background-image: url('https://www.transparenttextures.com/patterns/escheresque-dark.png');
   background-repeat: repeat;
+  animation: flicker 0.15s infinite;
+  overflow-y: scroll;
+  position: relative;
+  z-index: 1;
 }
+
 
 /* Boot-up screen styles */
     .boot-up-screen {
@@ -132,6 +142,43 @@ body {
   white-space: pre;
 }
 
+/* === Pixel Font Terminal Text === */
+.terminal-text {
+  white-space: pre-wrap;
+  animation: typing 4s steps(40, end) 1;
+  overflow: hidden;
+  border-right: 2px solid #00ff99;
+  display: inline-block;
+}
+
+/* === Glow Text === */
+.glow {
+  text-shadow:
+    0 0 2px #00ff99,
+    0 0 4px #00ff99,
+    0 0 6px #00ff99,
+    0 0 8px #00ff99;
+}
+
+/* === Scanlines Overlay === */
+.scanlines {
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05),
+    rgba(0, 0, 0, 0.05) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 9998;
+}
+
+
 h1 {
   color: #ff00ff;
   text-shadow: 2px 2px 0 #000;
@@ -207,7 +254,7 @@ marquee {
   background: #c0c0c0;
   width: 100%;
   padding: 10px;
-  border-top: 5px solid #808080;
+  border-top: 4px solid #808080;
 }
 
 /* ===== CRT SCREEN EFFECT ===== */
@@ -276,3 +323,35 @@ marquee {
         opacity: 0.03; /* adjust as needed */
         animation: staticNoise 0.05s infinite linear;
       }
+      
+/* === Old-School Scrollbar === */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: silver;
+  border-left: 2px solid #ccc;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border: 2px solid #eee;
+  box-shadow: inset 0 0 2px #000;
+}
+
+/* === Flicker Animation === */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.95;
+  }
+}
+
+/* === Terminal Typing Effect === */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
