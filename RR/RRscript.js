@@ -19,7 +19,7 @@ const dinoTotalFrames = 8;
 // ✅ Cop sprite animation settings
 const copFrameWidth = 128;
 const copFrameHeight = 128;
-const copTotalFrames = 6; // Adjust if needed based on your sheet
+const copTotalFrames = 4; // Adjust if needed based on your sheet
 
 let dinoFrame = 0;
 let copFrame = 0;
