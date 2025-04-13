@@ -4,6 +4,9 @@ let ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 300;
 
+let dinoImage = new Image();
+dinoImage.src = "raptor.gif";
+
 let dino = { x: 50, y: 200, width: 20, height: 30, jumpHeight: 50, speed: 2, isJumping: false };
 let obstacles = [];
 let score = 0;
@@ -41,8 +44,7 @@ function update() {
         dino.y += 5;
     }
 
-    ctx.fillStyle = "green";
-    ctx.fillRect(dino.x, dino.y, dino.width, dino.height);
+    ctx.drawImage(dinoImage, dino.x, dino.y, dino.width, dino.height);
 
     obstacles.forEach((obstacle, index) => {
         obstacle.x -= dino.speed;
