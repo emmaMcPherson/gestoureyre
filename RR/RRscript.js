@@ -4,20 +4,28 @@ let ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 300;
 
-// ✅ Load the raptor sprite sheet
+// ✅ Load raptor and cop sprite sheets
 let dinoSprite = new Image();
-dinoSprite.src = "raptor_sprite_sheet.png";  // make sure this matches your filename!
+dinoSprite.src = "raptor_sprite_sheet.png"; // Make sure the path matches!
 
-// ✅ Dino animation state
-const frameWidth = 128;
-const frameHeight = 128;
-const totalFrames = 8;
+let copSprite = new Image();
+copSprite.src = "cop_sprite_sheet.png"; // Use the one we generated!
 
-let currentFrame = 0;
+// ✅ Dino sprite animation settings
+const dinoFrameWidth = 128;
+const dinoFrameHeight = 128;
+const dinoTotalFrames = 8;
+
+// ✅ Cop sprite animation settings
+const copFrameWidth = 128;
+const copFrameHeight = 128;
+const copTotalFrames = 6; // Adjust if needed based on your sheet
+
+let dinoFrame = 0;
+let copFrame = 0;
 let frameTimer = 0;
-const frameDelay = 5; // smaller = faster animation
+const frameDelay = 5;
 
-// ✅ Your dino setup
 let dino = {
     x: 50,
     y: 200,
@@ -29,6 +37,7 @@ let dino = {
 };
 
 let obstacles = [];
+let bullets = [];
 let score = 0;
 let gameOver = false;
 
@@ -39,94 +48,51 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
+// 🧱 Spawn either regular obstacle or a cop
 function spawnObstacle() {
-    let obstacle = {
-        x: canvas.width,
-        y: 200,
-        width: 20 + Math.random() * 30,
-        height: 30 + Math.random() * 30
-    };
-    obstacles.push(obstacle);
+    let type = Math.random() < 0.5 ? "block" : "cop";
+    if (type === "block") {
+        obstacles.push({
+            type: "block",
+            x: canvas.width,
+            y: 200,
+            width: 20 + Math.random() * 30,
+            height: 30 + Math.random() * 30
+        });
+    } else {
+        obstacles.push({
+            type: "cop",
+            x: canvas.width,
+            y: 200,
+            width: 50,
+            height: 50,
+            bulletTimer: 0
+        });
+    }
 }
 
+// 🦖 Draw dino animation frame
 function drawDino() {
-    // Animate the sprite
     frameTimer++;
     if (frameTimer >= frameDelay) {
         frameTimer = 0;
-        currentFrame = (currentFrame + 1) % totalFrames;
+        dinoFrame = (dinoFrame + 1) % dinoTotalFrames;
+        copFrame = (copFrame + 1) % copTotalFrames;
     }
 
-    // Draw the current frame from sprite sheet
     ctx.drawImage(
         dinoSprite,
-        currentFrame * frameWidth, 0,
-        frameWidth, frameHeight,
+        dinoFrame * dinoFrameWidth, 0,
+        dinoFrameWidth, dinoFrameHeight,
         dino.x, dino.y,
         dino.width, dino.height
     );
 }
 
-function update() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-    if (gameOver) {
-        document.getElementById("gameOver").style.display = "block";
-        return;
-    }
-
-    if (dino.isJumping) {
-        dino.y -= 5;
-        if (dino.y <= 100) dino.isJumping = false;
-    } else if (dino.y < 200) {
-        dino.y += 5;
-    }
-
-    drawDino(); // ✅ use your new animation function
-
-    obstacles.forEach((obstacle, index) => {
-        obstacle.x -= dino.speed;
-        ctx.fillStyle = "brown";
-        ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
-
-        if (obstacle.x + obstacle.width < 0) {
-            obstacles.splice(index, 1);
-            score++;
-        }
-
-        if (dino.x + dino.width > obstacle.x && dino.x < obstacle.x + obstacle.width && dino.y + dino.height > obstacle.y) {
-            gameOver = true;
-        }
-    });
-
-    document.getElementById("score").innerText = `Score: ${score}`;
-    requestAnimationFrame(update);
-}
-
-setInterval(spawnObstacle, 2000);
-update();
-
-// Save score to localStorage
-function saveScore() {
-    let scores = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    scores.push(score);
-    scores.sort((a, b) => b - a);
-    if (scores.length > 5) scores = scores.slice(0, 5);
-    localStorage.setItem("leaderboard", JSON.stringify(scores));
-    displayLeaderboard();
-}
-
-// Display leaderboard
-function displayLeaderboard() {
-    let scores = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    let leaderboard = document.getElementById("leaderboard");
-    leaderboard.innerHTML = "";
-    scores.forEach((score, index) => {
-        let li = document.createElement("li");
-        li.innerText = `#${index + 1}: ${score}`;
-        leaderboard.appendChild(li);
-    });
-}
-
-window.addEventListener("beforeunload", saveScore);
-displayLeaderboard();
+// 👮 Draw cop animation frame
+function drawCop(cop) {
+    ctx.drawImage(
+        copSprite,
+        copFrame * copFrameWidth, 0,
+        copFrameWidth, copFrameHeight,
+        cop.x
