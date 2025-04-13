@@ -192,12 +192,12 @@ marquee {
 }
 
 .window.minimizing {
-  animation: minimizeAnimation 0.4s forwards;
+  animation: minimizeAnimation 0.7s forwards;
 }
 
 
 .window.closing {
-  animation: closeWindow 0.4s ease-out forwards;
+  animation: closeWindow 0.7s ease-out forwards;
 }
 
 #taskbar {
@@ -206,8 +206,8 @@ marquee {
   left: 0;
   background: #c0c0c0;
   width: 100%;
-  padding: 4px;
-  border-top: 2px solid #808080;
+  padding: 10px;
+  border-top: 5px solid #808080;
 }
 
 /* ===== CRT SCREEN EFFECT ===== */
@@ -276,4 +276,3 @@ marquee {
         opacity: 0.03; /* adjust as needed */
         animation: staticNoise 0.05s infinite linear;
       }
-      
