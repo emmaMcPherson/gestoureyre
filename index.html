@@ -6,6 +6,12 @@
     <title>gestourEyre</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to external CSS if you have it -->
 </head>
+
+<!-- Taskbar Button -->
+<div id="taskbar">
+    <button id="restore-btn" style="display: none;" class="btn">gestourEyre</button>
+</div>
+
 <body>
     <!-- Boot-up screen -->
     <div class="boot-up-screen" id="boot-screen">
@@ -20,14 +26,14 @@
         <div class="title-bar" id="drag-header">
             <div class="title">gestourEyre</div>
             <div class="controls">
-                <button class="btn">_</button>
+                <button class="btn" onclick="minimizeWindow()">_</button>
                 <button class="btn">☐</button>
                 <button class="btn" onclick="closeWindow()">X</button>
             </div>
         </div>
         <div class="window-body">
             <p>Hello World!</p>
-            <button class="btn" onclick="killWindow()">Don't click me 😨</button>
+            <button class="btn" onclick="killWindow()">Don't click me _〆(´Д｀ )</button>
         </div>
     </div>
 
@@ -118,6 +124,15 @@
         });
 
         let hasDragged = false;
+        let reopenCount = 0;
+
+        function startMusicOnDrag() {
+            const music = document.getElementById("main-title");
+            music.play().catch(e => console.log("Autoplay blocked:", e));
+
+            const message = document.getElementById("music-message");
+            message.innerHTML = "I've put on some music in the background <br>Can You Guess :D ?";
+        }
 
         document.addEventListener("mousemove", (e) => {
             if (isDragging) {
@@ -131,16 +146,32 @@
             }
         });
 
-        function startMusicOnDrag() {
-            const music = document.getElementById("main-title");
-            music.play().catch(e => console.log("Autoplay blocked:", e));
+        // min window with sound
+        function minimizeWindow(){
+            const music = domcument.getElementbyId("main-title");
+            music.pause();
+            music.currentTime = 0;
 
-            const message = document.getElementById("music-message");
-            message.innerHTML = "I've put on some music in the background <br>Can You Guess :D ?";
+            win.style.display = "none";
+            document.getElementById("restore-btn").style.display = "inline-block";
+
+            document.getElementById("restore-btn").addEventListener("click", () => {
+                win.style.display = "block";
+                document.getElementById("restore-btn").style.display = "none";
+
+                const music = document.getElementById("main-title");
+                music.play().catch(e => console.log("Autoplay blocked:", e));
+
+                const message = document.getElementById("music-message");
+                reopenCount++;
+                if (reopenCount === 1) {
+                    message.innerHTML = "Ah, you came back! (‾◡◝)<br>I'll put the music back";
+                } else {
+                    message.innerHTML = `Whoa! Gosh, #${reopenCount} times now...<br>That's okay. I'll stay for you （￣︶￣)`;
+                }
+            });
+
         }
-
-
-
         // Kill the window with animation and sound
         function killWindow() {
             const closeSound = document.getElementById("close-sound");

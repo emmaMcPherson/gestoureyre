@@ -1,5 +1,5 @@
 body {
-  background-color: ##faf9f6;
+  background-color: #faf9f6;
   font-family: 'MS Sans Serif', Tahoma, Geneva, sans-serif;
   font-size: 16px;
   margin: 0;
@@ -133,4 +133,14 @@ marquee {
 
 .window.closing {
   animation: closeWindow 0.4s ease-out forwards;
+}
+
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: #c0c0c0;
+  width: 100%;
+  padding: 4px;
+  border-top: 2px solid #808080;
 }
