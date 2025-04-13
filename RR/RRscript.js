@@ -12,13 +12,13 @@ let copSprite = new Image();
 copSprite.src = "cop_sprite_sheet.png"; // Use the one we generated!
 
 // ✅ Dino sprite animation settings
-const dinoFrameWidth = 128;
+const dinoFrameWidth = 256;
 const dinoFrameHeight = 128;
 const dinoTotalFrames = 8;
 
 // ✅ Cop sprite animation settings
-const copFrameWidth = 128;
-const copFrameHeight = 128;
+const copFrameWidth = 123;
+const copFrameHeight = 150;
 const copTotalFrames = 4; // Adjust if needed based on your sheet
 
 let dinoFrame = 0;
