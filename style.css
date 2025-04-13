@@ -127,6 +127,11 @@ body {
   padding: 10px;
 }
 
+.ascii-art {
+  font-family: monospace;
+  white-space: pre;
+}
+
 h1 {
   color: #ff00ff;
   text-shadow: 2px 2px 0 #000;

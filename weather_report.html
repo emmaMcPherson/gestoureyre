@@ -88,31 +88,66 @@
 
   <script>
     const locations = [
-      { name: "Bottineau, North Dakota", image: "images/Bottineau, North Dakota.png" },
-      { name: "Ariquemes, Rondônia", image: "images/Ariquemes, Rondônia.png" },
-      { name: "Шубартубек, Қазақстан", image: "images/Шубартубек, Қазақстан.png" },
-      { name: "Бесқарағай, Қазақстан, ", image: "images/Бесқарағай, Қазақстан.png" },
-      { name: "Søndre Strømfjord, Grønland", image: "images/Søndre Strømfjord, Grønland.png" }
-      { name: "Ikamiut, Grønland", image: "images/Ikamiut Strømfjord, Grønland.png" }    
-      { name: "Puerto Madryn, República Argentina", image: "images/Puerto Madryn, República Argentina.png" } 
-      { name: "Río Renaico, Chile", image: "images/Río Renaico, Chile.png" }
-      { name: "서울특별시, 대한민국", image: "images/서울특별시, 대한민국.png" }
-      {name:"오대산국립공원, 대한민국", image: "images/오대산국립공원, 대한민국.png" }
-      {name:"улаанбаатар, Монгол Улс", image: "images/улаанбаатар, Монгол Улс.png" }    
+      { name: "Bottineau, United States", image: "weather/Bottineau, North Dakota.png" },
+      { name: "Ariquemes, Rondônia", image: "weather/Ariquemes, Rondônia.png" },
+      { name: "Шубартубек, Қазақстан", image: "weather/Шубартубек, Қазақстан.png" },
+      { name: "Бесқарағай, Қазақстан, ", image: "weather/Бесқарағай, Қазақстан.png" },
+      { name: "Søndre Strømfjord, Grønland", image: "weather/Søndre Strømfjord, Grønland.png" },
+      { name: "Ikamiut, Grønland", image: "weather/Ikamiut Strømfjord, Grønland.png" },    
+      { name: "Puerto Madryn, República Argentina", image: "weather/Puerto Madryn, República Argentina.png" }, 
+      { name: "Río Renaico, Chile", image: "weather/Río Renaico, Chile.png" },
+      { name: "서울특별시, 대한민국", image: "weather/서울특별시, 대한민국.png" },
+      {name:"오대산국립공원, 대한민국", image: "weather/오대산국립공원, 대한민국.png" },
+      {name:"улаанбаатар, Монгол Улс", image: "weather/улаанбаатар, Монгол Улс.png"}, 
     ];
 
     const dates = [
-      "April 12, 1387", "June 5, 3099", "October 31, 1895",
-      "March 3, 2023 B.C.", "Fogtember 13, 420", "Synthuary 8, 7777"
+      "March 30, 1296", "1229년 4월 27일", "September 11, 1297",
+      "July 22, 1298", "24 de fevereiro de 1303", "9 de febrero de 1307",
+      "10 de mayo de 1307", "1314년 6월 23일", "1316 оны 1-p сарын 26",
+      "October 14, 1318", "20. september 1319", "October 14, 1322",
+      "August 3, 1327", "November 13, 1093", "1138 жыл, 10 маусым",
+      "22 тамыз 1138 ж", "13 de julio de 1174", "October 2, 1263",
+      "1275 оны 10-p сарын 8", "6. august 1332", "August 10, 1332",
+      "1332년 12월 16일", "1333년 3월 25일", "July 19, 1333",
+      "July 30, 1335", "30 de noviembre de 1335", "1337년 11월 28일",
+      "October 17, 1346", "1 de janeiro de 2021", "1997 жылғы 12 қаңтар",
+      "1904 оны 6-p сарын 16",
+      "Error", "Not Found"
     ];
 
     const weathers = [
-      { description: "Rain of frogs. Winds wailing.", sound: "sounds/frogs.mp3" },
-      { description: "Sunny with a 60% chance of dimensional rift.", sound: "sounds/rift.mp3" },
-      { description: "Cloudy with heavy time distortion.", sound: "sounds/time.mp3" },
-      { description: "Holographic haze with digital mist.", sound: "sounds/cyber.mp3" },
-      { description: "Acid snow. Wear a hat.", sound: "sounds/snow.mp3" },
-      { description: "Thunderous laughter from the clouds.", sound: "sounds/laugh.mp3" }
+      { description: "Rain that brings the frogs! Winds will get quite loud.", sound: "sound/frogs.mp3" },
+  //*   
+      { description: "Sweet rain (oﾟvﾟ)/", sound: "weather/calming-rain.mp3" },
+  //*
+      { description: "Sunny and bright ᓚᘏᗢ", sound: "weather/slow-birds.mp3" },
+      { description: "Sunny and bright (>' '<)", sound: "weather/junglebirds.mp3" },
+      { description: "Sunny and bright (. ❛ ᴗ ❛.)", sound: "weather/sun-lull.mp3" },
+      { description: "Sunny and bright (ˉ▽ˉ；)...", sound: "weather/sun.mp3" },
+  //*
+      { description: "Colder than it has been. What a blessing (*￣︶￣*)", sound: "weather/snow.mp3" },
+  //*
+      { description: "Cloudy with heavy rain.", sound: "sounds/rain.mp3" },
+  //*
+      { description: "Difficult haze with softend ground.", sound: "weather/rain.mp3" },
+  //*
+      { description: "Dark snow. Remember your reflective gear!", sound: "weather/winter-storm.mp3" },
+  //*
+      { description: "◑﹏◐ Big storm, watch your head!.", sound: "weather/rain-h.mp3" },
+      { description: "(`▽` ) Big storm, watch your head!.", sound: "weather/storm.mp3" },
+  //*   
+      { description: "Atmospheric tension.", sound: "weather/thunder-storm.mp3" },
+  //*
+      { description: "High tempertures, wear your protections please! (#`-_ゝ-)", sound: "weather/hot-day.mp3" },
+      { description: "High tempertures, wear your protections please!( ͡ಠ ʖ̯ ͡ಠ)", sound: "weather/hot.mp3" },
+      { description: "High tempertures, wear your protections please!.", sound: "weather/steam.mp3" },
+  //*
+      { description: "Bird season ಥ_ಥ", sound: "weather/magpie.mp3" },
+      { description: "Bird season （＞人＜；）", sound: "weather/parrots.mp3" },
+      { description: "Bird season （︶^︶)", sound: "weather/persistant-bird.mp3" },
+  //*
+      { description: "New thunder from the clouds ⚆_⚆ Maybe stay inside...", sound: "sounds/thunder.mp3" },
     ];
 
     function getRandom(arr) {
