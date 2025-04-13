@@ -150,16 +150,22 @@
     
         // RESTORE
         restoreBtn.addEventListener("click", () => {
+            win.classList.add("restoring");
             win.style.display = "block";
             restoreBtn.style.display = "none";
+
             music.play().catch(e => console.log("Autoplay blocked:", e));
-    
+
             reopenCount++;
             if (reopenCount === 1) {
                 message.innerHTML = "Ah, you came back! (‾◡◝)<br>I'll put the music back";
             } else {
                 message.innerHTML = `Whoa! Gosh, #${reopenCount} times now...<br>That's okay. I'll stay for you （￣︶￣)`;
             }
+
+            win.addEventListener("animationend", () => {
+                win.classList.remove("restoring");
+            }, { once: true });
         });
     
         // KILL WINDOW
