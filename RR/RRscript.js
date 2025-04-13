@@ -4,10 +4,30 @@ let ctx = canvas.getContext("2d");
 canvas.width = 800;
 canvas.height = 300;
 
-let dinoImage = new Image();
-dinoImage.src = "raptor.gif";
+// ✅ Load the raptor sprite sheet
+let dinoSprite = new Image();
+dinoSprite.src = "raptor_sprite_sheet.png";  // make sure this matches your filename!
 
-let dino = { x: 50, y: 200, width: 20, height: 30, jumpHeight: 50, speed: 2, isJumping: false };
+// ✅ Dino animation state
+const frameWidth = 128;
+const frameHeight = 128;
+const totalFrames = 8;
+
+let currentFrame = 0;
+let frameTimer = 0;
+const frameDelay = 5; // smaller = faster animation
+
+// ✅ Your dino setup
+let dino = {
+    x: 50,
+    y: 200,
+    width: 50,
+    height: 50,
+    jumpHeight: 50,
+    speed: 2,
+    isJumping: false
+};
+
 let obstacles = [];
 let score = 0;
 let gameOver = false;
@@ -29,6 +49,24 @@ function spawnObstacle() {
     obstacles.push(obstacle);
 }
 
+function drawDino() {
+    // Animate the sprite
+    frameTimer++;
+    if (frameTimer >= frameDelay) {
+        frameTimer = 0;
+        currentFrame = (currentFrame + 1) % totalFrames;
+    }
+
+    // Draw the current frame from sprite sheet
+    ctx.drawImage(
+        dinoSprite,
+        currentFrame * frameWidth, 0,
+        frameWidth, frameHeight,
+        dino.x, dino.y,
+        dino.width, dino.height
+    );
+}
+
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -44,7 +82,7 @@ function update() {
         dino.y += 5;
     }
 
-    ctx.drawImage(dinoImage, dino.x, dino.y, dino.width, dino.height);
+    drawDino(); // ✅ use your new animation function
 
     obstacles.forEach((obstacle, index) => {
         obstacle.x -= dino.speed;
@@ -72,8 +110,8 @@ update();
 function saveScore() {
     let scores = JSON.parse(localStorage.getItem("leaderboard")) || [];
     scores.push(score);
-    scores.sort((a, b) => b - a); // Sort highest to lowest
-    if (scores.length > 5) scores = scores.slice(0, 5); // Keep top 5 scores
+    scores.sort((a, b) => b - a);
+    if (scores.length > 5) scores = scores.slice(0, 5);
     localStorage.setItem("leaderboard", JSON.stringify(scores));
     displayLeaderboard();
 }
