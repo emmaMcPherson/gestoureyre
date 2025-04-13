@@ -30,7 +30,7 @@
         <p>&copy; 2025 gestourEyre</p>
     </footer>
 
-    // Boot-up screen animation
+    <!-- Boot-up screen animation-->
     <script>
     window.onload = () => {
         let progress = 0;
@@ -38,7 +38,7 @@
         const bootScreen = document.getElementById("boot-screen");
 
         const bootInterval = setInterval(() => {
-            progress += 5;  // Increase progress
+            progress += 15;  // Increase progress
             progressBar.style.width = `${progress}%`;
 
             // After 100% load, hide boot-up and show main window
