@@ -104,7 +104,7 @@ function drawCop(cop) {
 function updateBullets() {
     bullets.forEach((bullet, i) => {
         bullet.x -= bullet.speed;
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "black";
         ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
 
         if (
