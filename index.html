@@ -27,7 +27,7 @@
         </div>
         <div class="window-body">
             <p>Hello World!</p>
-            <button class="btn" onclick="closeWindow()">Don't click me 😨</button>
+            <button class="btn" onclick="killWindow()">Don't click me 😨</button>
         </div>
     </div>
 
@@ -111,28 +111,32 @@
             isDragging = false;
         });
 
-        // Close window with animation and sound
-        function closeWindow() {
+        // Kill the window with animation and sound
+        function killWindow() {
             const closeSound = document.getElementById("close-sound");
             closeSound.play();  // Play the sound
 
             win.classList.add("closing"); // Trigger animation
 
+    
+
             setTimeout(() => {
                 alert("you killed it...");  // Show alert box
                 win.style.display = "none";  // Hide the window
+                // Hide all page content
+            document.body.style.display = "none"; // Hides everything on the page
             }, 400); // After animation duration
         }
 
  // Function to simulate page close
-        function closePage() {
+        function closeWindow() {
             const closeSound = document.getElementById("close-sound");
             closeSound.play();  // Play the sound
 
-            // Hide all page content
-            document.body.style.display = "none"; // Hides everything on the page
+            
 
             setTimeout(() => {
+                win.style.display = "none"; // Hide the window
                 window.close();  // Try to close the window (may not work in all cases)
             }, 500);  // Give a little time for the transition to complete
         }
