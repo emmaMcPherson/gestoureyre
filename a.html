@@ -28,26 +28,27 @@
     <footer>
         <p>&copy; 2025 gestourEyre</p>
     </footer>
-    };    
-<script>
-        // Boot-up screen animation
+    
+    <!--bootup-animation-->
+    
+    <script>
         window.onload = () => {
-            let progress = 0;
-            const progressBar = document.getElementById("progress-bar");
-            const bootScreen = document.getElementById("boot-screen");
+        let progress = 0;
+        const progressBar = document.getElementById("progress-bar");
+        const bootScreen = document.getElementById("boot-screen");
 
-            const bootInterval = setInterval(() => {
-                progress += 5;  // Increase progress
-                progressBar.style.width = `${progress}%`;
+        const bootInterval = setInterval(() => {
+            progress += 15;  // Increase progress
+            progressBar.style.width = `${progress}%`;
 
-                // After 100% load, hide boot-up and show main window
-                if (progress >= 100) {
-                    clearInterval(bootInterval);
-                    bootScreen.style.display = "none";  // Hide boot-up screen
-                    win.style.display = "block";  // Show main window
-                }
-            }, 100);  // Update every 100ms
-        };
+            // After 100% load, hide boot-up and show main window
+            if (progress >= 100) {
+                clearInterval(bootInterval);
+                bootScreen.style.display = "none";  // Hide boot-up screen
+                win.style.display = "block";  // Show main window
+            }
+        }, 100);  // Update every 100ms
+    };
     </script>
 
     
