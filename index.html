@@ -355,6 +355,17 @@
                 }
             }, 100);
         });
+        
+        const resizeObserver = new ResizeObserver(entries => {
+            for (let entry of entries) {
+                if (entry.target === chaosWindow) {
+                    // Only trigger if not maximized
+                    if (!chaosWindow.classList.contains('maximized')) {
+                        triggerResizeDialogue();
+                    }
+                }
+            }
+        });
     </script>
     
 
