@@ -125,30 +125,29 @@
             win.style.display = "none";
             restoreBtn.style.display = "inline-block";
         }
-    
-        function growWindow() {
-    
+    //* Grow Window
+
         let growCount = 0;
-
-        const messagesOnResize = [
-        "Whoa, that tickles",
-        "Hey! What are you trying to do??",
-        "I'm comfortable like this!",
-        "Christ! There's nothing more to see!",
-        "Do you think I stretch like a webpage?!"
-        ];
-
-        
         const win = document.getElementById("win95-box");
         const message = document.getElementById("music-message");
         const panicSound = document.getElementById("panic-sound");
 
+        // Store original size/position
+        let originalRect = win.getBoundingClientRect();
+        let originalStyle = {
+            width: win.style.width || `${originalRect.width}px`,
+            height: win.style.height || `${originalRect.height}px`,
+            top: win.style.top || `${originalRect.top}px`,
+            left: win.style.left || `${originalRect.left}px`,
+            position: win.style.position || "absolute"
+        };
+        
+        function growWindow() {        
         growCount++;
 
         if (growCount === 1) {
-            // PANIC MODE
+            // panic!
             win.classList.add("full-screen", "shake", "flash-bg");
-
             panicSound.play().catch(e => console.warn("Panic sound blocked:", e));
 
             const panicFrames = [
@@ -189,22 +188,56 @@
             message.innerHTML = "is that a thing?";
         } else if (growCount === 4) {
             message.innerHTML = "(－‸ლ)<br>No thank you.";
-        } else if (growCount === 5) {
-            message.innerHTML = "...";
-        } else if (growCount === 6) {
+        } else if (growCount === 5 || growCount === 6 || growCount === 8) {
             message.innerHTML = "...";
         } else if (growCount === 7) {
             message.innerHTML = "I'm not letting that happen again (¬_¬)<br>...";
-        } else if (growCount === 8) {
-            message.innerHTML = "...";
         } else if (growCount === 9) {
             message.innerHTML = "You're very rude";
         } else if (growCount === 10) {
-            message.innerHTML = "(ㆆ_ㆆ)";
+            message.innerHTML = "ಠ_ಠ";
         } else {
-            message.innerHTML = "You've already done this. ಠ_ಠ";
+            message.innerHTML = "You've already done this. (ㆆ_ㆆ)";
         }
     }
+
+    window.addEventListener("resize", () => {
+        const rect = win.getBoundingClientRect();
+
+        const edgeTolerance = 10;
+        const nearEdge = (
+            rect.right >= window.innerWidth - edgeTolerance ||
+            rect.bottom >= window.innerHeight - edgeTolerance ||
+            rect.left <= edgeTolerance ||
+            rect.top <= edgeTolerance
+        );
+        
+        if (nearEdge) {
+            const resizeComments = [
+                "Getting a little close there, pal (ㆆ_ㆆ)",
+                "Christ! There's nothing more to see!",
+                "Do you think I stretch like a webpage?",
+                "I'm not adjustable like that",
+                "Are you trying to stretch me? It won't work.",
+                "Boundaries!!",
+                "RESIZING IS RUDE!!",
+                "No thanks.",
+                "D: rude.",
+                "Uhhh, mouse off"
+            ];
+            const randomIndex = Math.floor(Math.random() * resizeComments.length);
+            message.innerHTML = resizeComments[randomIndex];
+
+            // Snap back after a slight delay
+            setTimeout(() => {
+                win.style.position = originalStyle.position;
+                win.style.top = originalStyle.top;
+                win.style.left = originalStyle.left;
+                win.style.width = originalStyle.width;
+                win.style.height = originalStyle.height;
+            }, 300);
+        }
+    });
 
     
 
@@ -250,7 +283,7 @@
             });
     
             document.addEventListener("mousemove", (e) => {
-                const rect = win.getBoundingCliantRect();
+                const rect = win.getBoundingClientRect();
                 const edgeThreshold = 10;
                 
                 const nearEdge =
