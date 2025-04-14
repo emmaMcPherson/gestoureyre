@@ -172,7 +172,7 @@
                 message.innerHTML = `${panicFrames[frame % panicFrames.length]}<br>${panicMessages[msgIndex % panicMessages.length]}`;
                 frame++;
                 if (frame % 2 === 0) msgIndex++;
-            }, 1500);
+            }, 2000);
 
             setTimeout(() => {
                 clearInterval(panicInterval);
@@ -180,7 +180,7 @@
                 panicSound.pause();
                 panicSound.currentTime = 0;
                 message.innerHTML = "(；￣Д￣）<br>...never again...";
-            }, 3000);
+            }, 12000);
 
         } else if (growCount === 2) {
             message.innerHTML = "i think i have altocelarophobia..."; 
