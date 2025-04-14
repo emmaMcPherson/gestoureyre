@@ -167,7 +167,7 @@
 
             let frame = 0;
             let msgIndex = 0;
-
+//need it so upper messsage (hello world) leavesss
             const panicInterval = setInterval(() => {
                 message.innerHTML = `${panicFrames[frame % panicFrames.length]}<br>${panicMessages[msgIndex % panicMessages.length]}`;
                 frame++;
@@ -249,9 +249,10 @@
             setTimeout(() => {
                 win.style.display = "none";
                 window.close();
-            }, 500);
+            }, 200);
         }
     // def need to have a error sound doooo when done, and better end screen, not just white. 
+    //maybe shakes first, flashes? scared face. 
         function killWindow() {
             const closeSound = document.getElementById("close-sound");
             const win = document.getElementById("win95-box");
@@ -261,7 +262,7 @@
                 alert("you killed it...");
                 win.style.display = "none";
                 document.body.style.display = "none";
-            }, 400);
+            }, 200);
         }
     
         // DOM logic [really iffy here]
