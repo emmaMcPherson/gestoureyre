@@ -172,7 +172,7 @@
                 message.innerHTML = `${panicFrames[frame % panicFrames.length]}<br>${panicMessages[msgIndex % panicMessages.length]}`;
                 frame++;
                 if (frame % 2 === 0) msgIndex++;
-            }, 800);
+            }, 1500);
 
             setTimeout(() => {
                 clearInterval(panicInterval);
