@@ -11,6 +11,13 @@
 
 
 <body>
+    
+        <!-- Sound -->
+    <audio id="close-sound" src="all-wii-sounds/Click Channel.wav"></audio>
+    <audio id="main-title" src="all-wii-sounds/Shop Channel Title.wav" loop></audio>
+    <audio id="panic-sound" src="all-wii-sounds/Update_Scan_Remove.wav"></audio>
+
+
     <!-- Boot-up screen -->
     <audio id="ambientHum" src="all-wii-sounds/vibration-1.mp3" autoplay loop></audio>
     <div class="scanlines"></div>
@@ -45,9 +52,6 @@
         <button id="restore-btn" style="display: none;" class="btn">gestourEyre</button>
     </div>
 
-    <!-- Sound -->
-    <audio id="close-sound" src="button-7.wav"></audio>
-    <audio id="main-title" src="all-wii-sounds/Shop Channel Title.wav" loop></audio>
 
     <!--Marquee-message-->
     <header>
@@ -122,6 +126,88 @@
             restoreBtn.style.display = "inline-block";
         }
     
+        function growWindow() {
+    
+        let growCount = 0;
+
+        const messagesOnResize = [
+        "Whoa, that tickles",
+        "Hey! What are you trying to do??",
+        "I'm comfortable like this!",
+        "Christ! There's nothing more to see!",
+        "Do you think I stretch like a webpage?!"
+        ];
+
+        
+        const win = document.getElementById("win95-box");
+        const message = document.getElementById("music-message");
+        const panicSound = document.getElementById("panic-sound");
+
+        growCount++;
+
+        if (growCount === 1) {
+            // PANIC MODE
+            win.classList.add("full-screen", "shake", "flash-bg");
+
+            panicSound.play().catch(e => console.warn("Panic sound blocked:", e));
+
+            const panicFrames = [
+                "(°□°;)", "(╯°□°）╯", "Σ(°ロ°)",
+                "(((゜Д゜；)))", "(☉_☉)", "(°ロ°)",
+                "(≧ロ≦)", "(；ﾟДﾟ)"
+            ];
+
+            const panicMessages = [
+                "Hey! What just happened??!",
+                "I'm not comfortable like this!!!",
+                "I CAN'T BREATHE IN FULLSCREEN!!!",
+                "HOW DO I BREATHE LIKE THIS??!",
+                "I'M JUST A SMALL WINDOW!!",
+                "AAAUUUGGGHHHH!!"
+            ];
+
+            let frame = 0;
+            let msgIndex = 0;
+
+            const panicInterval = setInterval(() => {
+                message.innerHTML = `${panicFrames[frame % panicFrames.length]}<br>${panicMessages[msgIndex % panicMessages.length]}`;
+                frame++;
+                if (frame % 2 === 0) msgIndex++;
+            }, 300);
+
+            setTimeout(() => {
+                clearInterval(panicInterval);
+                win.classList.remove("full-screen", "shake", "flash-bg");
+                panicSound.pause();
+                panicSound.currentTime = 0;
+                message.innerHTML = "(；￣Д￣）<br>...never again...";
+            }, 3000);
+
+        } else if (growCount === 2) {
+            message.innerHTML = "i think i have altocelarophobia..."; 
+        } else if (growCount === 3) {
+            message.innerHTML = "is that a thing?";
+        } else if (growCount === 4) {
+            message.innerHTML = "(－‸ლ)<br>No thank you.";
+        } else if (growCount === 5) {
+            message.innerHTML = "...";
+        } else if (growCount === 6) {
+            message.innerHTML = "...";
+        } else if (growCount === 7) {
+            message.innerHTML = "I'm not letting that happen again (¬_¬)<br>...";
+        } else if (growCount === 8) {
+            message.innerHTML = "...";
+        } else if (growCount === 9) {
+            message.innerHTML = "You're very rude";
+        } else if (growCount === 10) {
+            message.innerHTML = "(ㆆ_ㆆ)";
+        } else {
+            message.innerHTML = "You've already done this. ಠ_ಠ";
+        }
+    }
+
+    
+
         function closeWindow() {
             const closeSound = document.getElementById("close-sound");
             const win = document.getElementById("win95-box");
@@ -164,6 +250,25 @@
             });
     
             document.addEventListener("mousemove", (e) => {
+                const rect = win.getBoundingCliantRect();
+                const edgeThreshold = 10;
+                
+                const nearEdge =
+                    e.clientX - rect.left < edgeThreshold ||
+                    rect.right - e.clientX < edgeThreshold ||
+                    e.clientY - rect.top < edgeThreshold ||
+                    rect.bottom - e.clientY < edgeThreshold;
+                if (nearEdge) {
+                 const msg = messagesOnResize[Math.floor(Math.random() * messagesOnResize.length)];
+                 message.innerHTML = msg;
+
+                 setTimeout(() => {
+                 if (message.innerHTML === msg) {
+                 message.innerHTML = "";
+                            }
+                        }, 2000);
+                    }
+
                 if (isDragging) {
                     win.style.left = `${e.clientX - offsetX}px`;
                     win.style.top = `${e.clientY - offsetY}px`;
