@@ -172,7 +172,7 @@
                 message.innerHTML = `${panicFrames[frame % panicFrames.length]}<br>${panicMessages[msgIndex % panicMessages.length]}`;
                 frame++;
                 if (frame % 2 === 0) msgIndex++;
-            }, 300);
+            }, 800);
 
             setTimeout(() => {
                 clearInterval(panicInterval);
@@ -239,6 +239,7 @@
         }
     });
 
+    resizeObserver.observe(win);
     
 
         function closeWindow() {
