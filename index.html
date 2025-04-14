@@ -12,13 +12,13 @@
 
 <body>
     
-        <!-- Sound -->
+        <!-- Sounds -->
     <audio id="close-sound" src="all-wii-sounds/Click Channel.wav"></audio>
     <audio id="main-title" src="all-wii-sounds/Shop Channel Title.wav" loop></audio>
     <audio id="panic-sound" src="all-wii-sounds/Update_Scan_Remove.wav"></audio>
 
 
-    <!-- Boot-up screen -->
+    <!-- Boot-up -->
     <audio id="ambientHum" src="all-wii-sounds/vibration-1.mp3" autoplay loop></audio>
     <div class="scanlines"></div>
 
@@ -53,7 +53,7 @@
     </div>
 
 
-    <!--Marquee-message-->
+    <!--Marquee-message--> <!--maybe have it randomized? or cycle?--> 
     <header>
         <marquee>you just lost the game</marquee>
     </header>
@@ -72,7 +72,7 @@
         </ul>
     </nav>
 
-        <!-- Sections on the site -->
+        <!-- Sections on the site (Def figure out wth to do here) -->
 
     <section id="1">
         <h2 class="glow terminal-text">First Stop</h2>
@@ -90,7 +90,7 @@
         <a href="RR/RR-Page.html"><img src="RR/cop.gif" alt="🔫"><img src="RR/raptor.gif" alt="🦖"></a>
     </section>
 
-        <!-- Guestbook Section -->
+        <!-- Guestbook Section (ERROR, BACKEND)-->
     <section id="guestbook">
         <h2>Guestbook</h2>
         <div id="message-list">
@@ -114,7 +114,7 @@
 
 
     <script>
-        // Global functions must use lazy lookup (grab elements inside the function)
+        //the stuff that does stuff
         function minimizeWindow() {
             const win = document.getElementById("win95-box");
             const music = document.getElementById("main-title");
@@ -125,14 +125,14 @@
             win.style.display = "none";
             restoreBtn.style.display = "inline-block";
         }
-    //* Grow Window
+    // Grow Window [-u-] -> [  o.o  ] -> [-.-] 
 
         let growCount = 0;
         const win = document.getElementById("win95-box");
         const message = document.getElementById("music-message");
         const panicSound = document.getElementById("panic-sound");
 
-        // Store original size/position
+        // OG size&position
         let originalRect = win.getBoundingClientRect();
         let originalStyle = {
             width: win.style.width || `${originalRect.width}px`,
@@ -200,7 +200,7 @@
             message.innerHTML = "You've already done this. (ㆆ_ㆆ)";
         }
     }
-
+// Resize window! [DOES NOT WORK- WTF, check edge boundaries? not possible to actually size... maybe button click on ends?]
     window.addEventListener("resize", () => {
         const rect = win.getBoundingClientRect();
 
@@ -228,7 +228,7 @@
             const randomIndex = Math.floor(Math.random() * resizeComments.length);
             message.innerHTML = resizeComments[randomIndex];
 
-            // Snap back after a slight delay
+            // Go back (unsure if works bc main doesn't)
             setTimeout(() => {
                 win.style.position = originalStyle.position;
                 win.style.top = originalStyle.top;
@@ -238,10 +238,10 @@
             }, 300);
         }
     });
-
+// supposed to be for resize. won't load and crashes site
 //    resizeObserver.observe(win);
     
-
+    //Close Her [make it interact a bit more? maybe dejected? maybe call it when keep trying to maximize?]
         function closeWindow() {
             const closeSound = document.getElementById("close-sound");
             const win = document.getElementById("win95-box");
@@ -251,7 +251,7 @@
                 window.close();
             }, 500);
         }
-    
+    // def need to have a error sound doooo when done, and better end screen, not just white. 
         function killWindow() {
             const closeSound = document.getElementById("close-sound");
             const win = document.getElementById("win95-box");
@@ -264,7 +264,7 @@
             }, 400);
         }
     
-        // DOM logic
+        // DOM logic [really iffy here]
         window.addEventListener("DOMContentLoaded", () => {
             const win = document.getElementById("win95-box");
             const dragHeader = document.getElementById("drag-header");
@@ -333,7 +333,7 @@
                     win.classList.remove("restoring");
                 }, { once: true });
             });
-    
+    // for some reason, not the best, little delay. also, drag doesn't always drag. ugh.
             function startMusicOnDrag() {
                 music.play().catch(e => console.log("Autoplay blocked:", e));
                 message.innerHTML = "I've put on some music in the background <br>Can You Guess ƪ(˘⌣˘)ʃ ?";
@@ -355,7 +355,7 @@
                 }
             }, 100);
         });
-        
+        // not in use bc earlier call is not working. bc this is not working. fix. 
         const resizeObserver = new ResizeObserver(entries => {
             for (let entry of entries) {
                 if (entry.target === chaosWindow) {

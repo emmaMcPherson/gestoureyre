@@ -175,16 +175,16 @@
       weatherSound.play();
     }
 
-    // Ambient hum auto-play fallback
+    // hum auto-play fallback
     document.addEventListener("DOMContentLoaded", () => {
       const hum = document.getElementById("ambientHum");
       hum.play().catch(() => {
-        // In case browser blocks autoplay, user interaction will trigger it
+        // In case browser blocks autoplay, user interaction will trigger it!!!
         document.body.addEventListener('click', () => hum.play(), { once: true });
       });
     });
 
-    // Boot sequence animation
+    // Boot sequence animation --> try to delete this after done. and maybe put better words lol
     const bootLines = [
       "BOOTING WEATHER TERMINAL 4.2.0...",
       "Establishing uplink...",

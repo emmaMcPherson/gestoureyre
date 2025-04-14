@@ -3,23 +3,22 @@ let ctx = canvas.getContext("2d");
 
 canvas.width = 800;
 canvas.height = 300;
-
-// ✅ Load raptor and cop sprite sheets
+//issues: much too fast too quick....
+// Load raptor and cop sprite sheets
 let dinoSprite = new Image();
-dinoSprite.src = "raptor_sprite_sheet.png"; // Make sure the path matches!
+dinoSprite.src = "raptor_sprite_sheet.png"; 
 
 let copSprite = new Image();
-copSprite.src = "cop_sprite_sheet.png"; // Use the one we generated!
+copSprite.src = "cop_sprite_sheet.png"; 
 
-// ✅ Dino sprite animation settings
+//animation settings :)
 const dinoFrameWidth = 256;
 const dinoFrameHeight = 128;
 const dinoTotalFrames = 8;
 
-// ✅ Cop sprite animation settings
 const copFrameWidth = 123;
 const copFrameHeight = 150;
-const copTotalFrames = 4; // Adjust if needed based on your sheet
+const copTotalFrames = 4; 
 
 let dinoFrame = 0;
 let copFrame = 0;
@@ -35,7 +34,7 @@ let dino = {
     speed: 2,
     isJumping: false
 };
-
+// I want to change obstacles, and I want to make bullets worth some points? and also, i want risk of fly. and I want to pick up things so more points. 
 let obstacles = [];
 let bullets = [];
 let score = 0;
@@ -48,7 +47,7 @@ document.addEventListener("keydown", function(event) {
     }
 });
 
-// 🧱 Spawn either regular obstacle or a cop
+// Spawn regular obstacle or a cop
 function spawnObstacle() {
     let type = Math.random() < 0.5 ? "block" : "cop";
     if (type === "block") {
@@ -71,7 +70,7 @@ function spawnObstacle() {
     }
 }
 
-// 🦖 Draw dino animation frame
+// Draw raptor animation frame
 function drawDino() {
     frameTimer++;
     if (frameTimer >= frameDelay) {
@@ -89,7 +88,7 @@ function drawDino() {
     );
 }
 
-// 👮 Draw cop animation frame
+// Draw cop animation frame
 function drawCop(cop) {
     ctx.drawImage(
         copSprite,
@@ -100,7 +99,7 @@ function drawCop(cop) {
     );
 }
 
-// 🔫 Draw and update bullets
+// Draw and update bullets --> maybe i can have health, and a couple of bullettes kill?
 function updateBullets() {
     bullets.forEach((bullet, i) => {
         bullet.x -= bullet.speed;
@@ -121,7 +120,7 @@ function updateBullets() {
     });
 }
 
-// 🚀 Main game update
+// Main game update
 function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -149,7 +148,7 @@ function update() {
             drawCop(obs);
             obs.bulletTimer++;
 
-            if (obs.bulletTimer >= 60) { // fires every ~1 second
+            if (obs.bulletTimer >= 60) { // fires every ~1 second, probably change...
                 bullets.push({
                     x: obs.x,
                     y: obs.y + 20,
@@ -184,7 +183,7 @@ function update() {
 setInterval(spawnObstacle, 2000);
 update();
 
-// 💾 Save & show leaderboard
+// Save & show leaderboard --> need global function. fix backend. 
 function saveScore() {
     let scores = JSON.parse(localStorage.getItem("leaderboard")) || [];
     scores.push(score);
